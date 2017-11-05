@@ -2,7 +2,9 @@
  <div class="container">
     <div class="span3 well">
         <center>
-        <a href="#aboutModal" data-toggle="modal" data-target="#myModal"><img src="../assets/Watchanan-profile.jpg" name="aboutme" width="140" height="140" class="img-circle"></a>
+        <a href="#aboutModal" data-toggle="modal" data-target="#myModal">
+            <img :src="'./static/img/Watchanan-profile.jpg'" name="aboutme" width="140" height="140" class="img-circle">
+        </a>
         <h3>Watchanan Chantapakul</h3>
         <h4>570610601</h4>
         <h4></h4>
@@ -19,7 +21,7 @@
                     </div>
                 <div class="modal-body">
                     <center>
-                    <img src="../assets/Watchanan-profile.jpg" name="aboutme" width="140" height="140" border="0" class="img-circle"></a>
+                    <img :src="'./static/img/Watchanan-profile.jpg'" name="aboutme" width="140" height="140" border="0" class="img-circle"></a>
                     <h3 class="media-heading">Watchanan Chantapakul <small>Thailand</small></h3>
                     <span><strong>Interests: </strong></span>
                         <span class="label label-warning">Life-long Learning</span>
@@ -47,6 +49,10 @@
 
 <script>
 export default {
-  
+  computed: {
+      profileImage() {
+          return require('../assets/Watchanan-profile.jpg')
+      }
+  }
 }
 </script>
