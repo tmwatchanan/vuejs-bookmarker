@@ -5,6 +5,7 @@ import App from './App'
 import VueResource from 'vue-resource'
 import VueRouter from 'vue-router';
 import { routes } from './routes'; // routes.js
+import VeeValidate from 'vee-validate';
 
 Vue.use(VueRouter);
 
@@ -15,10 +16,12 @@ const router = new VueRouter({
 
 Vue.config.productionTip = false
 
-Vue.use(VueResource)
+Vue.use(VueResource);
 // Vue.http.options.root = 'https://note-app-83bf9.firebaseio.com/bookmarks.json';
 
 export const eventBus = new Vue();
+
+Vue.use(VeeValidate);
 
 /* eslint-disable no-new */
 new Vue({
