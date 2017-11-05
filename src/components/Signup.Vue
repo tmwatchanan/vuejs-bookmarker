@@ -1,85 +1,66 @@
 <template>
   <div class="sign-up">
       <p>Let's create a new account!</p>
-        <!-- <input type="text" ref="name" v-model="user.name" placeholder="Full Name"><br> -->
-        <div class="form-group" :class="{'has-error': errors.has('email') }" >
-            <label class="control-label" for="email">Email: </label>
-            <input style="display: none;" v-validate="user.email" data-rules="required|email" class="form-control" type="email" placeholder="Email">
-            <input v-model="user.email" v-validate="'required|email'" class="form-control" :class="{'input': true, 'is-danger': errors.has('email') }" name="email" type="email" placeholder="Email">
-            <p class="text-danger" v-if="errors.has('email')">{{ errors.first('email') }}</p>
-        </div>
 
-        <div class="form-group">
-            <!-- <div class="input-group-addon">
-            Enter Password
-            </div> -->
+        <div class="layout-form">
+            <div class="form-group" :class="{error: validation.hasError('user.email')}">
+                <div class="label">* Email:</div>
+                <div class="content"><input type="text" class="form-control" v-model="user.email" placeholder="abc@email.com"/></div>
+                <div class="message">{{ validation.firstError('user.email') }}</div>
+            </div>
 
-            <label class="control-label" for="password1">Password: </label>
-            <div class="input-fields">
-                <input v-model="user.password1" v-validate="'required|min:8'" name="password" type="password" class="form-control" placeholder="Password">
-                <div class="text-danger" v-show="errors.any()">
-                    <div v-if="errors.has('password')">
-                    {{ errors.first('password') }}
-                    </div>
+            <div class="form-group" :class="{error: validation.hasError('user.password1')}">
+                <div class="label">* Password:</div>
+                <div class="content"><input type="password" class="form-control" v-model="user.password1" placeholder="*********"/></div>
+                <div class="message">{{ validation.firstError('user.password1') }}</div>
+            </div>
+            <div class="form-group" :class="{error: validation.hasError('user.password2')}">
+                <div class="label">* Confirm Password:</div>
+                <div class="content"><input type="password" class="form-control" v-model="user.password2" placeholder="*********"/></div>
+                <div class="message">{{ validation.firstError('user.password2') }}</div>
+            </div>
+
+            <div class="form-group" :class="{error: validation.hasError('user.name')}">
+                <div class="label">* Name</div>
+                <div class="content"><input type="text" class="form-control" v-model="user.name" placeholder="Watchanan Chantapakul" /></div>
+                <div class="message">{{ validation.firstError('user.name') }}</div>
+            </div>
+            <div class="form-group" :class="{error: validation.hasError('user.gender')}">
+                <div class="label">* Gender</div>
+                <div class="content">
+                    <label>
+                    <input type="radio" class="form-control" name="user.gender" value="male" v-model="user.gender" />
+                    Male
+                    </label>
+                    <label>
+                    <input type="radio" class="form-control" name="user.gender" value="female" v-model="user.gender" />
+                    Female
+                    </label>
+                </div>
+                <div class="message">{{ validation.firstError('user.gender') }}</div>
+            </div>
+            <div class="form-group" :class="{error: validation.hasError('user.phone')}">
+                <div class="label">Phone</div>
+                <div class="content"><input type="text" class="form-control" v-model="user.phone" placeholder="0123456789"/></div>
+                <div class="message">{{ validation.firstError('user.phone') }}</div>
+            </div>
+            <div class="form-group" :class="{error: validation.hasError('user.age')}">
+                <div class="label">Age</div>
+                <div class="content"><input type="text" class="form-control" v-model="user.age" placeholder="21"/></div>
+                <div class="message">{{ validation.firstError('user.age') }}</div>
+            </div>
+            <div class="form-group" :class="{error: validation.hasError('user.facebook')}">
+                <div class="label">* Facebook Name</div>
+                <div class="content"><input type="text" class="form-control" v-model="user.facebook" placeholder="Watchanan Chantapakul" /></div>
+                <div class="message">{{ validation.firstError('user.facebook') }}</div>
+            </div>
+            <div class="form-group">
+                <div class="actions">
+                    <button type="button" class="btn btn-default" @click="reset">Reset</button>
+                    <button type="button" class="btn btn-primary" @click="submit">Submit</button>
                 </div>
             </div>
         </div>
-        
-        <div class="form-group">
-            <label class="control-label" for="password2">Confirm Password: </label>
-            <div class="input-fields">
-                <input v-model="user.password2" v-validate="'required|min:8|confirmed:password'" name="password_confirmation" type="password" class="form-control" placeholder="Password, Again" data-vv-as="password">
-                <div class="text-danger" v-show="errors.any()">
-                    <div v-if="errors.has('password_confirmation')">
-                    {{ errors.first('password_confirmation') }}
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group" :class="{'has-error': errors.has('name') }" >
-            <label class="control-label" for="name">Full Name: </label>
-            <input style="display: none;" v-validate="user.name" data-rules="required|alpha|min:2" class="form-control" type="text" placeholder="Name">
-            <input v-model="user.name" v-validate="'required|alpha|min:2'" class="form-control" :class="{'input': true, 'is-danger': errors.has('name') }" name="name" type="text" placeholder="Name">
-            <p class="text-danger" v-if="errors.has('name')">{{ errors.first('name') }}</p>
-        </div>
-
-        <div class="form-group" :class="{'has-error': errors.has('birthdate') }" >
-            <label class="control-label" for="birthdate">Birthdate: </label>
-            <input style="display: none;" v-validate="user.birthdate" data-rules="required|date_format:DD/MM/YYYY" class="form-control" type="text" placeholder="Name">
-            <input v-model="user.birthdate" v-validate="'required|date_format:DD/MM/YYYY'" class="form-control" :class="{'input': true, 'is-danger': errors.has('birthdate') }" name="birthdate" type="text" placeholder="DD/MM/YYYY">
-            <p class="text-danger" v-if="errors.has('birthdate')">{{ errors.first('birthdate') }}</p>
-        </div>
-
-        <div class="form-group" :class="{'has-error': errors.has('facebook') }" >
-            <label class="control-label" for="facebook">Facebook Name: </label>
-            <input style="display: none;" v-validate="user.facebook" data-rules="required|alpha|min:2" class="form-control" type="text" placeholder="Name">
-            <input v-model="user.facebook" v-validate="'required|alpha|min:2'" class="form-control" :class="{'input': true, 'is-danger': errors.has('facebook') }" name="facebook" type="text" placeholder="Facebook">
-            <p class="text-danger" v-if="errors.has('facebook')">{{ errors.first('facebook') }}</p>
-        </div>
-
-        <!-- <div class="form-group" :class="{'has-error': errors.has('age') }" >
-            <label class="control-label" for="age">Age: </label>
-            <input style="display: none;" v-validate="user.facebook" data-rules="required|digits:3" class="form-control" type="text" placeholder="Name">
-            <input v-model="user.facebook" v-validate="'required|digits:3'" class="form-control" :class="{'input': true, 'is-danger': errors.has('age') }" name="age" type="number" placeholder="Facebook">
-            <p class="text-danger" v-if="errors.has('age')">{{ errors.first('age') }}</p>
-        </div> -->
-
-<!-- <div class="column is-12"> -->
-    <!-- <label class="label" for="email">Email</label> -->
-    <!-- <p :class="{ 'control': true }"> -->
-        <!-- <span v-show="errors.has('email')" class="help text-danger">{{ errors.first('email') }}</span> -->
-    <!-- </p> -->
-<!-- </div> -->
-        <!-- <input v-validate="{ required: true, email: true, regex: /[0-9]+/ }" type="text" name="email"> -->
-        <!-- <input type="text" ref="email" v-model="user.email" placeholder="Email"><br>
-        <input type="password" v-model="user.password1" placeholder="Password"><br>
-        <input type="password" ref="password2" v-model="user.password2" placeholder="Confirm password"><br>
-        <input type="text" ref="url" v-model="user.url" placeholder="Website"><br>
-        <input type="text" ref="phone" v-model="user.phone" placeholder="Phone number"><br> -->
-
-        <!-- <button  @click="validateBeforeSubmit">Sign Up</button> -->
-        <!-- <button  @click="validateBeforeSubmit">Sign Up</button> -->
       <span>or go back to <router-link to="/login">login</router-link>.</span>
   </div>
 </template>
@@ -87,6 +68,8 @@
 <script>
 import firebase from 'firebase';
 import { db } from '@/FirebaseConfig'
+import SimpleVueValidation from 'simple-vue-validator';
+var Validator = SimpleVueValidation.Validator;
 
 var md5 = require('md5');
 let usersRef = db.ref('users');
@@ -100,20 +83,83 @@ export default {
               password1: '',
               password2: '',
               name: '',
-              birthdate: '',
+              gender: '',
+              phone: '',
+              age: '',
               facebook: '',
+              birthdate: '',
               url: '',
-              phone: ''
-          }
+          },
+          submitted: false,
+          validated: false
+      }
+  },
+  validators: {
+    'user.email': function (value) {
+        return Validator.value(value).required().email();
+    },
+    'user.password1': function (value) {
+        return Validator.value(value).required().minLength(8);
+    },
+    'user.password2, user.password1': function (password2, password1) {
+        if (this.submitted || this.validation.isTouched('user.password2')) {
+            return Validator.value(password2).required().match(password1);
+        }
+    },
+    'user.name': function(value) {
+        return Validator.value(value).required().regex('^[A-Za-z ]*$', 'Must only contain alphabetic characters.');
+      },
+    'user.gender': function(value) {
+        return Validator.value(value).required();
+      },
+    'user.phone': function(value) {
+        return Validator.value(value).digit().length(10);
+      },
+    'user.age': function(value) {
+        return Validator.value(value).integer().greaterThan(12).lessThan(100);
+      },
+    'user.facebook': function(value) {
+        return Validator.value(value).regex('^[A-Za-z ]*$', 'Must only contain alphabetic characters.');
       }
   },
   methods: {
+      submit: function () {
+        var vueThis = this;
+        this.submitted = true;
+        this.$validate()
+          .then(function (success) {
+            if (success) {
+              vueThis.signup();
+            }
+          });
+      },
+    //   computed: {
+    //       validated() {
+    //           if (this.validated) {
+    //               this.validated = false;
+    //               this.signup();
+    //           }
+    //       }
+    //   },
+      reset: function() {
+        this.user.email = '';
+        this.user.password1 = '';
+        this.user.password2 = '';
+        this.user.name = '';
+        this.user.gender = '';
+        this.user.phone = '';
+        this.user.age = '';
+        this.user.facebook = '';
+        this.validation.reset();
+      },
       validateBeforeSubmit() {
           console.log("email: " + this.user.email);
           console.log("password1: " + this.user.password1);
           console.log("password2: " + this.user.password2);
           console.log("name: " + this.user.name);
-          console.log("birthdate: " + this.user.birthdate);
+          console.log("gender: " + this.user.gender);
+          console.log("phone: " + this.user.phone);
+          console.log("age: " + this.user.age);
           console.log("facebook: " + this.user.facebook);
           if (this.user.email && (this.user.password1 === this.user.password2)) {
               this.signup();
@@ -159,10 +205,12 @@ export default {
       },
       addUserInfo() {
           var newUser = {
-              name: this.user.name,
               email: this.user.email,
+              name: this.user.name,
+              gender: this.user.gender,
               phone: this.user.phone,
-              url: this.user.url
+              age: this.user.age,
+              facebook: this.user.facebook
           }
 
           var uid = md5(this.user.email);
@@ -175,25 +223,149 @@ export default {
 </script>
 
 <style scoped>
-    .signUp {
-        margin-top: 40px;
-    }
-    input, .alert {
-        /* margin: 5px 0; */
-        margin: 0 auto;
-        width: 40%;
-        /* padding: 15px; */
-    }
-    button {
-        margin-top: 10px;
-        width: 10%;
-        cursor: pointer;
-    }
-    span {
-        display: block;
-        margin-top: 20px;
-        font-size: 11px;
-    }
 
+.layout-form .form-group {
+  display: flex;
+  margin: 15px 0;
+}
+
+.layout-form .form-group .label {
+  width: 20%;
+  padding: 10px 10px 0 0;
+  font-weight: bold;
+  color: #374853;
+  text-align: right;
+}
+
+.layout-form .form-group.error .label {
+  color: #ff6666;
+}
+
+.layout-form .form-group .content {
+  width: 50%;
+  min-width: 120px;
+}
+
+.layout-form .form-group .content label {
+  display: inline-block;
+  padding: 5px 20px 0 0;
+}
+
+.layout-form .form-group .message {
+  flex: 1;
+  padding: 5px 0 0 20px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-weight: bold;
+}
+
+.layout-form .form-group.error .message {
+  color: #ff6666;
+}
+
+.layout-form .form-group .form-control {
+  font-size: 14px;
+}
+
+.layout-form .form-group .actions {
+  margin-left: 100px;
+  width: 50%;
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .layout-form {
+    font-size: 12px;
+  }
+
+  .layout-form .form-group .label {
+    width: 60px;
+    padding-right: 10px;
+  }
+
+  .layout-form .form-group .form-control {
+    font-size: 12px;
+  }
+
+
+  .layout-form .form-group .actions {
+    margin-left: 60px;
+  }
+}
+
+.layout-form .form-group input[type="text"].form-control,
+.layout-form .form-group input[type="password"].form-control {
+  width: 100%;
+  font-weight: lighter;
+  padding: 4px 6px;
+  border: solid #acacac 1px;
+  outline: none;
+}
+
+.layout-form .form-group input[type="text"].form-control:focus,
+.layout-form .form-group input[type="password"].form-control:focus {
+  border-color: #374853;
+}
+
+.layout-form .form-group.error input[type="text"].form-control,
+.layout-form .form-group.error input[type="password"].form-control,
+.layout-form .form-group.error input[type="text"].form-control:focus,
+.layout-form .form-group.error input[type="password"].form-control:focus {
+  border-color: #ff6666;
+}
+
+.layout-form .form-group .btn {
+  font-size: 12px;
+  font-weight: normal;
+  padding: 6px 10px;
+  border-radius: 4px;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.layout-form .form-group .btn + .btn {
+  margin-left: 8px;
+}
+
+@media (max-width: 768px) {
+  .layout-form .form-group .btn {
+    padding: 3px 6px;
+  }
+
+  .layout-form .form-group .btn + .btn {
+    margin-left: 4px;
+  }
+}
+
+.layout-form .form-group .btn-primary {
+  color: #fff;
+  background-color: #41b883;
+  border: solid #39a073 1px;
+}
+
+.layout-form .form-group .btn-primary:focus {
+  background-color: #3dad7c;
+}
+
+.layout-form .form-group .btn-primary:active {
+  background-color: #39a073;
+}
+
+.layout-form .form-group .btn-default {
+  color: #374853;
+  background-color: #fff;
+  border: solid #acacac 1px;
+}
+
+.layout-form .form-group .btn-default:focus {
+  background-color: #eee;
+}
+
+.layout-form .form-group .btn-default:active {
+  background-color: #ccc;
+}
 </style>
 

@@ -31,8 +31,11 @@
           name: '',
           email: '',
           url: '',
-          phone: ''
-        }
+          phone: '',
+          gender: '',
+          age: '',
+          facebook: ''
+        },
       }
     },
     methods: {

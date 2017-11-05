@@ -5,7 +5,8 @@ import App from './App'
 import VueResource from 'vue-resource'
 import VueRouter from 'vue-router';
 import { routes } from './routes'; // routes.js
-import VeeValidate from 'vee-validate';
+// import VeeValidate from 'vee-validate';
+import SimpleVueValidation from 'simple-vue-validator';
 
 Vue.use(VueRouter);
 
@@ -21,7 +22,8 @@ Vue.use(VueResource);
 
 export const eventBus = new Vue();
 
-Vue.use(VeeValidate);
+// Vue.use(VeeValidate);
+Vue.use(SimpleVueValidation);
 
 /* eslint-disable no-new */
 new Vue({
