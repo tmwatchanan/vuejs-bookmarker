@@ -1,9 +1,26 @@
 <template>
   <div class="login">
-      <h3>Sign in</h3>
-      <input type="text" v-model="user.username" placeholder="Email"><br>
-      <input type="password" v-model="user.password" placeholder="Password"><br>
-      <button @click="login">Login</button>
+      <h3>Log In</h3>
+
+    <div class="form-group">
+        <div class="label">Phone</div>
+        <div class="content"><input type="text" class="form-control" v-model="user.username" placeholder="Email"/></div>
+    </div>
+    <div class="form-group">
+        <div class="label">Phone</div>
+        <div class="content"><input type="password" class="form-control" v-model="user.password" placeholder="Password"/></div>
+    </div>
+
+    <div class="form-group">
+        <div class="actions">
+            <button type="button" class="btn btn-primary" @click="login">Login</button>
+        </div>
+    </div>
+      <p>
+          Did not register yet? 
+          <router-link to="/signup" tag="span" active-class="active" exact><a>Sign Up</a></router-link>
+          here
+      </p>
   </div>
 </template>
 
@@ -15,6 +32,13 @@ var md5 = require('md5');
 
 export default {
     name: 'Login',
+    created() {
+        var user = firebase.auth().currentUser;
+        if (user) {
+            console.log("[Login] found user!");
+            this.$router.push('/Profile')
+        }
+    },
     data() {
         return {
             user: {
@@ -28,10 +52,11 @@ export default {
         login() {
             firebase.auth().signInWithEmailAndPassword(this.user.username, this.user.password).then(
                 user => {
-                    alert('User authentication successful');
+                    // alert('User authentication successful');
                     var uid = md5(this.user.username);
                     console.log("uid=" + uid + " <-- " + this.user.username);
                     eventBus.$emit('uID', uid);
+                    eventBus.$emit('LoggedIn', true);
                     this.$router.push({ name: 'AddBookmark' });
                 },
                 err => {
@@ -59,13 +84,12 @@ export default {
 </script>
 
 <style scoped>
-    .login {
+    /* .login {
         margin-top: 40px;
-    }
+    } */
     input {
-        margin: 10px 0;
+        margin: 0 auto;
         width: 40%;
-        padding: 15px;
     }
     button {
         margin-top: 20px;

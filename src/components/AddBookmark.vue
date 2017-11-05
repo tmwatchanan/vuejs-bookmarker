@@ -1,5 +1,6 @@
 <template>
-  <div class="jumbotron">
+  <div>
+    <div v-if="loggedIn" class="jumbotron">
     <h2>Bookmark Your Favorite Sites</h2>
     <form id="myForm">
       <div class="form-group">
@@ -32,6 +33,12 @@
         <div id="bookmarksResults"></div>
       </div>
     </div>
+    </div>
+    <div v-if="!loggedIn">
+    <div class="alert alert-danger">
+      <strong>Alert!</strong> You should login first to use bookmarker app :3
+    </div>
+    </div>
   </div>
 </template>
 
@@ -49,7 +56,8 @@
           url: ''
         },
         bookmarks: [],
-        uid: ''
+        uid: '',
+        loggedIn: false
       }
     },
 
@@ -116,6 +124,8 @@
       var user = firebase.auth().currentUser;
 
       if (user) {
+        console.log("[AddBookmark] found user!");
+        this.loggedIn = true;
         // this.user.photoURL = user.photoURL;
         // this.user.userId = user.uid;
         // this.user.name = user.displayName;
@@ -127,7 +137,8 @@
 
         this.fetchData();
       } else {
-          this.$router.push({ name: 'Login' });
+          this.loggedIn = false;
+          // this.$router.push({ name: 'Login' });
       }
     },
     // mounted() {

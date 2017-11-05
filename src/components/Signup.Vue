@@ -76,6 +76,13 @@ let usersRef = db.ref('users');
 
 export default {
   name: 'signUp',
+  created() {
+    var user = firebase.auth().currentUser;
+    if(user) {
+        console.log("[SignUp] found user!");
+        this.$router.push('/Profile')
+    }
+  },
   data() {
       return {
           user: {
@@ -86,12 +93,9 @@ export default {
               gender: '',
               phone: '',
               age: '',
-              facebook: '',
-              birthdate: '',
-              url: '',
+              facebook: ''
           },
-          submitted: false,
-          validated: false
+          submitted: false
       }
   },
   validators: {
@@ -151,35 +155,6 @@ export default {
         this.user.age = '';
         this.user.facebook = '';
         this.validation.reset();
-      },
-      validateBeforeSubmit() {
-          console.log("email: " + this.user.email);
-          console.log("password1: " + this.user.password1);
-          console.log("password2: " + this.user.password2);
-          console.log("name: " + this.user.name);
-          console.log("gender: " + this.user.gender);
-          console.log("phone: " + this.user.phone);
-          console.log("age: " + this.user.age);
-          console.log("facebook: " + this.user.facebook);
-          if (this.user.email && (this.user.password1 === this.user.password2)) {
-              this.signup();
-          } else {
-              if(!this.user.name) {
-                  alert('Name cannot be empty');
-                  this.$refs.name.focus();
-                  return;
-              }
-              if(!this.user.email) {
-                  alert('Email cannot be empty');
-                  this.$refs.email.focus();
-                  return;
-              }
-              if(this.user.password1 != this.user.password2) {
-                  alert('Password mismatch');
-                  this.$refs.password2.focus();
-                  return;
-              }
-          }
       },
       signup() {
             firebase.auth().createUserWithEmailAndPassword(this.user.email, this.user.password1).then( 

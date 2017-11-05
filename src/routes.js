@@ -3,6 +3,7 @@ import About from './components/About.vue';
 import Profile from './components/Profile.vue';
 import Login from './components/Login.vue';
 import Signup from './components/Signup.vue';
+import Logout from './components/Logout.vue';
 
 export const routes = [
   {
@@ -32,5 +33,10 @@ export const routes = [
     path: '/signup',
     component: Signup,
     name: 'Signup'
+  },
+  {
+    path: '/logout',
+    component: Logout,
+    name: 'Logout'
   }
 ]
