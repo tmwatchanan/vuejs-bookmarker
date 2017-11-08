@@ -104,12 +104,12 @@ import { eventBus } from '../main';
                 // this.link2 = "/login";
                 // this.link2Name = "Log In";
                 this.$router.push({
-                  name: 'AddBookmark'
+                  name: 'Login'
                 });
             });
             console.log("[Logout] not found user");
             this.$router.push({
-              name: 'AddBookmark'
+              name: 'Login'
             });
         }
       }
