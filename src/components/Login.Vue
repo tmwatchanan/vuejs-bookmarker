@@ -36,7 +36,7 @@ export default {
         var user = firebase.auth().currentUser;
         if (user) {
             console.log("[Login] found user!");
-            this.$router.push('/Profile')
+            // this.$router.push({ name: 'Profile' });
         }
     },
     data() {

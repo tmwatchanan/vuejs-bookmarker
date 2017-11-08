@@ -68,6 +68,7 @@
 <script>
 import firebase from 'firebase';
 import { db } from '@/FirebaseConfig'
+import { eventBus } from '../main';
 import SimpleVueValidation from 'simple-vue-validator';
 var Validator = SimpleVueValidation.Validator;
 
@@ -80,7 +81,7 @@ export default {
     var user = firebase.auth().currentUser;
     if(user) {
         console.log("[SignUp] found user!");
-        this.$router.push('/Profile')
+        this.$router.push({ name: 'Profile' });
     }
   },
   data() {
@@ -165,6 +166,7 @@ export default {
                     // var newUser = this.addUserInfo();
                     this.addUserInfo();
 
+                    eventBus.$emit('LoggedIn', true);
                     this.$router.push({ name: 'Profile' });
                 }, 
                 error => {

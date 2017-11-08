@@ -19,9 +19,9 @@ export default {
             })
         } else {
             console.log("[Logout] not found user");
-            this.$router.push({
-            name: 'Login'
-            });
+            // this.$router.push({
+            // name: 'Login'
+            // });
         }
     }
 }
